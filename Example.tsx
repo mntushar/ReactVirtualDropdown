@@ -13,15 +13,23 @@ export default function Dashboard() {
 
   const fetchData = useCallback(async (request: SelectorRequest) => {
     try {
-      const data = await requestHandler.getList(
-        request.startIndex,
-        request.limit,
-        'name',
-        null,
-        request.searchKey
-      );
+      const params = new URLSearchParams({
+            skip: request.startIndex.toString(),
+            limit: request.limit.toString(),
+            sortColumn: 'name,
+            sortOrder: '',
+            searchKey: searchKey,
+        });
+      const url = `${http://localhost:3000}/list?${params}`;
+      const response = await fetch(url);
+      if(!response.ok) throw new Error();
+      const data = await response.json();
       const itemData = data.map(({ id, name }: SelectItem) => ({ id, name }))
-      const count = await requestHandler.getCount(request.searchKey);
+  
+      const url = `${http://localhost:3000}/count?${searchKey}`;
+      const response = await fetch(url);
+      if(!response.ok) throw new Error();
+      const count = await response.json();
       return {
         items: itemData,
         totalCount: count,
