@@ -62,7 +62,7 @@ input.virtual-selector-search {
   position: relative;
   width: 100%;
   background: white;
-  overflow-x: hidden;
+  overflow: hidden;
   padding: 0;
 }
 
