@@ -225,7 +225,7 @@ const VirtualSelector = ({ fetchData, height, rowHeight, placeholder, selectedDa
       </div>
       {isOpen && (
         <div ref={containerRef} className="select-list"
-          style={{ position: "relative", overflowY: "auto", height: height }}
+          style={{ width: "100%", overflowY: "auto", height: height }}
           onScroll={handleScroll}>
           <div className="search-input">
             <input className="virtual-selector-search" placeholder="Search..." onChange={((e) => searchOption(e))} />
