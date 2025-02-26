@@ -51,6 +51,11 @@ const VirtualSelector = ({ fetchData, height, rowHeight, placeholder, selectedDa
   const [searchTimerId, setSearchTimerId] = useState<number>(0);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
+   // Update selectedOption when selectedData changes
+   useEffect(() => {
+    setSelectedOption(selectedData);
+  }, [selectedData]);
+
   // Data fetching
   const fetchDataForRange = useCallback(async (start: number, end: number) => {
     const currentRequestId = Date.now();
