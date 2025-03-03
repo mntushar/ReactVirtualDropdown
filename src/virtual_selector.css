@@ -1,0 +1,77 @@
+.virtual-selector {
+  position: relative;
+  width: auto;
+}
+
+.select-list {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 0 1rem 1rem 1rem;
+  position: absolute;
+  overflow-y: auto; 
+}
+
+.selected-option {
+  padding: 2px;
+  padding-left: 11px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.selected-value {
+  flex-grow: 1;
+  max-width: 99%;
+}
+
+.search-input {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: 45px;
+  padding-top: 1rem;
+  background: white;
+  transition: padding-top 0.2s ease; 
+}
+
+input.virtual-selector-search {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  padding-left: 12px;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: white;
+  border: 1px solid #dee2e6;
+  border-radius: .375rem;
+  outline: none;
+  cursor: text;
+  box-sizing: border-box;
+}
+
+.options-list {
+  border: none;
+  position: relative;
+  width: 100%;
+  background: white;
+  overflow: hidden;
+  padding: 0;
+}
+
+.option-li {
+  padding-left: 0.5rem;
+  list-style: none;
+  border-bottom: 1px dashed gray;
+}
+
+.option-li:hover {
+  background: #ebe9e9;
+}

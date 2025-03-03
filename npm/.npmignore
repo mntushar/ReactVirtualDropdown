@@ -1,0 +1,5 @@
+/npm/src
+/npm/node_modules
+
+/npm/tsconfig.json
+/npm/tsup.config.ts
