@@ -1,8 +1,12 @@
 'use client'
 
-import { SelectItem, SelectorRequest, VirtualSelector } from "react-virtual-dropdown";
+// import { SelectItem, SelectorRequest, VirtualSelector } from "react-virtual-dropdown";
+import { SelectItem, SelectorRequest, VirtualSelector } from "../../../src/virtual_selector";
 import styles from "./page.module.css";
 import { useCallback } from "react";
+
+// import 'react-virtual-dropdown/dist/index.css';
+import '../../../src/virtual_selector.css';
 
 export default function Home() {
   const selectedData = '';
@@ -15,13 +19,13 @@ export default function Home() {
       //       sortOrder: '',
       //       searchKey: searchKey,
       //   });
-      const url = `https://jsonplaceholder.typicode.com/photos`;
+      const url = `https://jsonplaceholder.typicode.com/comments`;
       const response = await fetch(url);
       if(!response.ok) throw new Error();
       const data = await response.json();
-      const itemData = data.map(({ id, albumId }: { id: number, albumId: number }) => ({
+      const itemData = data.map(({ id, email }: { id: number, email: number }) => ({
         id: id.toString(), 
-        name: albumId.toString() 
+        name: email.toString() 
       }));
   
       // const url = `http://localhost:3000}/count?${searchKey}`;
@@ -30,7 +34,7 @@ export default function Home() {
       // const count = await response.json();
       return {
         items: itemData,
-        totalCount: 5000,
+        totalCount: 500,
       };
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -48,6 +52,7 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <h1>Alhadmulilah</h1>
+      <div style={{width: "200"}}>
       <VirtualSelector
           fetchData={fetchData}
           height={200}
@@ -55,6 +60,7 @@ export default function Home() {
           placeholder="Select Category"
           selectedData={selectedData}
           callBack={getValue} />
+      </div>
     </div>
   );
 }
