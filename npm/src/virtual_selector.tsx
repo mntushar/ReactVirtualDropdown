@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import React from "react";
+
 import "./virtual_selector.css";
 
 export interface SelectItem {
