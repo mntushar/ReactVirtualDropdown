@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import Image from 'next/image';
 import "./virtual_selector.css";
 
 export interface SelectItem {
@@ -51,8 +50,8 @@ const VirtualSelector = ({ fetchData, height, rowHeight, placeholder, selectedDa
   const [searchTimerId, setSearchTimerId] = useState<number>(0);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-   // Update selectedOption when selectedData changes
-   useEffect(() => {
+  // Update selectedOption when selectedData changes
+  useEffect(() => {
     setSelectedOption(selectedData);
   }, [selectedData]);
 
@@ -178,7 +177,7 @@ const VirtualSelector = ({ fetchData, height, rowHeight, placeholder, selectedDa
   const renderOption = (index: number) => {
     const optionData = data.get(index);
     const { end } = visibleRange;
-    if(searchKeyValue && !optionData && totalCount < end ){
+    if (searchKeyValue && !optionData && totalCount < end) {
       return null;
     }
     return (
@@ -205,26 +204,16 @@ const VirtualSelector = ({ fetchData, height, rowHeight, placeholder, selectedDa
         <div className="selected-value" onClick={() => activeOption(!isOpen)}>
           {selectedOption ? selectedOption : placeholder || 'Select an option'}
         </div>
-        <div className="selected-icon">
-          {selectedOption && (
-            <span onClick={() => handleOptionClick('', '')}>
-              <Image
-                src="/images/icons8-close-24.png"
-                alt="Close Logo"
-                className="brand-image opacity-75 shadow"
-                width={19}
-                height={19}
-              />
+        <div className="selected-icon" style={{ display: 'flex', alignItems: 'center' }}>
+          {selectedOption ? (
+            <span onClick={() => handleOptionClick('', '')} style={{ marginRight: '3px', marginLeft: '5px' }}>
+              <div className="close-icon"></div>
             </span>
+          ) : (
+            <div style={{ marginRight: '3px', visibility: 'hidden' }}></div>
           )}
           <span onClick={() => activeOption(!isOpen)}>
-            <Image
-              src="/images/resize-vertical.png"
-              alt="Dropdown Logo"
-              className="brand-image opacity-75 shadow"
-              width={19}
-              height={19}
-            />
+            <div className="dropdown-icon"></div>
           </span>
         </div>
       </div>
@@ -253,3 +242,4 @@ const VirtualSelector = ({ fetchData, height, rowHeight, placeholder, selectedDa
 VirtualSelector.displayName = "VirtualSelector";
 
 export { VirtualSelector };
+

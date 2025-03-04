@@ -29,6 +29,10 @@
   max-width: 99%;
 }
 
+.selected-icon .close-icon {
+  margin-right: 3px;
+}
+
 .search-input {
   position: sticky;
   top: 0;
@@ -75,3 +79,43 @@ input.virtual-selector-search {
 .option-li:hover {
   background: #ebe9e9;
 }
+
+.dropdown-icon {
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid black;
+  margin-right: 3px;
+}
+
+
+.close-icon {
+  display: inline-block;
+  position: relative;
+  width: 13px;
+  height: 13px;
+  border-radius: 4px;
+  line-height: 0;
+}
+
+.close-icon::before,
+.close-icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 11px;
+  height: 2px;
+  background-color: red;
+  transform-origin: center;
+}
+
+.close-icon::before {
+  transform: translate(-50%, -50%) rotate(41deg);
+}
+
+.close-icon::after {
+  transform: translate(-50%, -50%) rotate(-41deg);
+}
+
