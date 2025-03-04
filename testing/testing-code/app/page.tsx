@@ -1,12 +1,12 @@
 'use client'
 
-// import { SelectItem, SelectorRequest, VirtualSelector } from "react-virtual-dropdown";
-import { SelectItem, SelectorRequest, VirtualSelector } from "../../../src/virtual_selector";
+import { SelectItem, SelectorRequest, VirtualSelector } from "react-virtual-dropdown";
+// import { SelectItem, SelectorRequest, VirtualSelector } from "../../../src/virtual_selector";
 import styles from "./page.module.css";
 import { useCallback } from "react";
 
-// import 'react-virtual-dropdown/dist/index.css';
-import '../../../src/virtual_selector.css';
+import 'react-virtual-dropdown/dist/index.css';
+// import '../../../src/virtual_selector.css';
 
 export default function Home() {
   const selectedData = '';
@@ -52,12 +52,12 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <h1>Alhadmulilah</h1>
-      <div style={{width: "200"}}>
+      <div style={{width: "500px"}}>
       <VirtualSelector
           fetchData={fetchData}
           height={200}
           rowHeight={35}
-          placeholder="Select Category"
+          placeholder="Select Dropdown"
           selectedData={selectedData}
           callBack={getValue} />
       </div>
