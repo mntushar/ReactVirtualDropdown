@@ -103,7 +103,7 @@ export default function Home() {
 Now you're ready to start using the components.
 
 ### Output
-<p align="center">
+<p style="background-color: #f6f8fa; text-align: center;">
   <img src="https://github.com/mntushar/ReactVirtualDropdown/blob/main/OutputImages/Screenshot%202025-03-05%20170327.png" alt="Output Image One" width="400"/>
   <img src="https://github.com/mntushar/ReactVirtualDropdown/blob/main/OutputImages/Screenshot%202025-03-05%20170350.png" alt="Output Image Two" width="400"/>
   <img src="https://github.com/mntushar/ReactVirtualDropdown/blob/main/OutputImages/Screenshot%202025-03-05%20170406.png" alt="Output Image Three" width="400"/>
