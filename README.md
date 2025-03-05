@@ -105,3 +105,11 @@ export default function Home() {
 <img src="https://github.com/mntushar/ReactVirtualDropdown/blob/main/OutputImages/Screenshot%202025-03-05%20170327.png" alt="output Image one" width="200"/>
 <img src="https://github.com/mntushar/ReactVirtualDropdown/blob/main/OutputImages/Screenshot%202025-03-05%20170350.png" alt="output Image two" width="200"/>
 <img src="https://github.com/mntushar/ReactVirtualDropdown/blob/main/OutputImages/Screenshot%202025-03-05%20170406.png" alt="output Image three" width="200"/>
+
+
+### Dependencies
+react-virtual-dropdown has very few dependencies and most are managed by NPM automatically.
+
+
+### Supported Browsers
+react-virtual-dropdown aims to support all evergreen browsers and recent mobile browsers for iOS and Android. IE 9+ is also supported (although IE 9 will require some user-defined, custom CSS since flexbox layout is not supported).
