@@ -20,7 +20,7 @@ The VirtualSelector is a virtual scrolling-based selector component designed to 
 - Fetching paginated data from a server dynamically.
 
 # Getting started
-Install `react-virtual-dropdown` using npm.
+###Install `react-virtual-dropdown` using npm.
 
 ```npm i react-virtual-dropdown```
 
@@ -90,7 +90,7 @@ export default function Home() {
       <div style={{width: "500px"}}>
       <VirtualSelector
           fetchData={fetchData}
-          height={200}
+          height={400}
           rowHeight={35}
           placeholder="Select Dropdown"
           selectedData={selectedData}
