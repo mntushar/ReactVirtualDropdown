@@ -103,9 +103,11 @@ export default function Home() {
 Now you're ready to start using the components.
 
 ### Output
-<img src="https://github.com/mntushar/ReactVirtualDropdown/blob/main/OutputImages/Screenshot%202025-03-05%20170327.png" alt="output Image one" width="200"/>
-<img src="https://github.com/mntushar/ReactVirtualDropdown/blob/main/OutputImages/Screenshot%202025-03-05%20170350.png" alt="output Image two" width="200"/>
-<img src="https://github.com/mntushar/ReactVirtualDropdown/blob/main/OutputImages/Screenshot%202025-03-05%20170406.png" alt="output Image three" width="200"/>
+<p align="center">
+  <img src="https://github.com/mntushar/ReactVirtualDropdown/blob/main/OutputImages/Screenshot%202025-03-05%20170327.png" alt="Output Image One" width="400"/>
+  <img src="https://github.com/mntushar/ReactVirtualDropdown/blob/main/OutputImages/Screenshot%202025-03-05%20170350.png" alt="Output Image Two" width="400"/>
+  <img src="https://github.com/mntushar/ReactVirtualDropdown/blob/main/OutputImages/Screenshot%202025-03-05%20170406.png" alt="Output Image Three" width="400"/>
+</p>
 
 
 ### Dependencies
