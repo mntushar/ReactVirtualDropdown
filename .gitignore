@@ -1,6 +1,8 @@
 /npm/dist
 /npm/node_modules
 
+/src/node_modules
+
 /testing/testing-code/.next
 /testing/testing-code/node_modules
 
