@@ -1,9 +1,11 @@
 'use client'
 
-import { SelectItem, SelectorRequest, VirtualSelector } from "react-virtual-dropdown";
-// import { SelectItem, SelectorRequest, VirtualSelector } from "../../../src/virtual_selector";
+// import { SelectItem, SelectorRequest, VirtualSelector } from "react-virtual-dropdown";
+import { SelectItem, SelectorRequest, VirtualSelector } from "../../../src/virtual_selector";
 import styles from "./page.module.css";
 import { useCallback, useEffect, useState } from "react";
+
+import '../../../src/virtual_selector.css'
 
 export default function Home() {
   const [selectedData, setSelectedData] = useState<string>('');
@@ -19,13 +21,13 @@ export default function Home() {
       // const url = `https://your_url/comments?${params}`;
       const url = `https://jsonplaceholder.typicode.com/comments`;
       const response = await fetch(url);
-      if(!response.ok) throw new Error();
+      if (!response.ok) throw new Error();
       const data = await response.json();
       const itemData = data.map(({ id, email }: { id: number, email: number }) => ({
-        id: id.toString(), 
-        name: email.toString() 
+        id: id.toString(),
+        name: email.toString()
       }));
-  
+
       // const countUrl = `http://your_url/count?searchKey=${request.searchKey}`;
       // const countResponse = await fetch(countUrl);
       // if(!countResponse.ok) throw new Error();
@@ -49,21 +51,33 @@ export default function Home() {
 
   const getSetData = async () => {
     const countUrl = `http://your_url/your-data-id`;
-      const countResponse = await fetch(countUrl);
-      if(!countResponse.ok) throw new Error();
-      const data = await countResponse.json();
-      setSelectedData(data);
+    const countResponse = await fetch(countUrl);
+    if (!countResponse.ok) throw new Error();
+    const data = await countResponse.json();
+    setSelectedData(data);
   };
 
   useEffect(() => {
-      // getSetData()
+    // getSetData()
   }, [])
 
   return (
     <div className={styles.page}>
       <h1>Alhadmulilah</h1>
-      <div style={{width: "500px"}}>
-      <VirtualSelector
+      <div style={{ width: "500px" }}>
+        <VirtualSelector
+          fetchData={fetchData}
+          height={200}
+          rowHeight={35}
+          placeholder="Select Dropdown"
+          selectedData={selectedData}
+          callBack={getValue} />
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <VirtualSelector
           fetchData={fetchData}
           height={200}
           rowHeight={35}
