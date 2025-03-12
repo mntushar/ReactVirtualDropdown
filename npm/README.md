@@ -26,8 +26,6 @@ The VirtualSelector is a virtual scrolling-based selector component designed to 
 
 ### Setup
 ```
-'use client'
-
 import { SelectItem, SelectorRequest, VirtualSelector } from "react-virtual-dropdown";
 import { useCallback, useEffect, useState } from "react";
 
