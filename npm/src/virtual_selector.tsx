@@ -114,6 +114,7 @@ const VirtualSelector = ({ fetchData, height, rowHeight, placeholder, selectedDa
 
   // Fetch data when visible range changes
   useEffect(() => {
+    if (!isOpen) return; 
     const { start, end } = visibleRange;
     if (start >= 0 && end >= start) {
       fetchDataForRange(start, end);

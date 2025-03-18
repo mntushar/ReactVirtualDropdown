@@ -1,6 +1,6 @@
 {
   "name": "react-virtual-dropdown",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "The React Virtual Dropdown is a virtual scrolling-based selector component designed to optimize data loading and rendering. Instead of loading all data at once, it loads a specific number of items and fetches new data as the user scrolls.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
