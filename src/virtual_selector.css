@@ -11,6 +11,8 @@
   position: absolute;
   overflow-y: auto; 
   z-index: 10;
+  overflow-x: auto;       
+  white-space: nowrap; 
 }
 
 .selected-option {
@@ -67,7 +69,6 @@ input.virtual-selector-search {
   position: relative;
   width: 100%;
   background: white;
-  overflow: hidden;
   padding: 0;
 }
 
@@ -89,7 +90,6 @@ input.virtual-selector-search {
   border-top: 7px solid black;
   margin-right: 3px;
 }
-
 
 .close-icon {
   display: inline-block;
@@ -119,4 +119,6 @@ input.virtual-selector-search {
 .close-icon::after {
   transform: translate(-50%, -50%) rotate(-41deg);
 }
+
+
 
