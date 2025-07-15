@@ -37,6 +37,7 @@ export interface SelectorRequest {
 const VirtualSelector = ({ fetchData, height, rowHeight, placeholder, selectedData, callBack }: SelectorProps) => {
   const buffer = 10;
   const [data, setData] = useState<Map<number, SelectItem>>(new Map());
+  const [isLoding, setIsLoding] = useState<boolean>(false);
   const [totalCount, setTotalCount] = useState(0);
   const [visibleRange, setVisibleRange] = useState({ start: 0, end: 30 });
   const containerRef = useRef<HTMLDivElement>(null);
@@ -85,7 +86,18 @@ const VirtualSelector = ({ fetchData, height, rowHeight, placeholder, selectedDa
         }
         return prevTotalCount;
       });
+
+      setIsLoding(false);
+
+      setVisibleRange(prev => {
+        const newEnd = Math.min(prev.end, result.totalCount - 1);
+        if (newEnd !== prev.end) {
+          return { ...prev, end: newEnd };
+        }
+        return prev;
+      });
     } catch (error) {
+      setIsLoding(false);
       console.error("Failed to fetch data:", error);
     }
   }, [fetchData, searchKeyValue]);
@@ -112,7 +124,7 @@ const VirtualSelector = ({ fetchData, height, rowHeight, placeholder, selectedDa
 
   // Fetch data when visible range changes
   useEffect(() => {
-    if (!isOpen) return; 
+    if (!isOpen) return;
     const { start, end } = visibleRange;
     if (start >= 0 && end >= start) {
       fetchDataForRange(start, end);
@@ -132,8 +144,10 @@ const VirtualSelector = ({ fetchData, height, rowHeight, placeholder, selectedDa
     setIsOpen(isActive);
 
     if (isActive) {
+      setIsLoding(true);
       const start = 0;
       const end = Math.ceil(height / rowHeight) + buffer;
+
       setVisibleRange({ start, end });
     }
   }
@@ -174,6 +188,22 @@ const VirtualSelector = ({ fetchData, height, rowHeight, placeholder, selectedDa
     };
   }, [isOpen]);
 
+  const lodingRenderOption = () => {
+    return (
+      <li
+        key={'lodingRenderOption'}
+        className="option-li-loding spinner-container"
+        style={{
+          position: "absolute",
+          top: 25,
+          height: ((totalCount * rowHeight) - 50),
+          width: "100%",
+        }}
+      >
+        <div className="spinner"></div>
+      </li>
+    );
+  };
 
   const renderOption = (index: number) => {
     const optionData = data.get(index);
@@ -229,10 +259,14 @@ const VirtualSelector = ({ fetchData, height, rowHeight, placeholder, selectedDa
             className="options-list"
             style={{ position: "relative", height: totalCount * rowHeight }}
           >
-            {Array.from(
-              { length: visibleRange.end - visibleRange.start + 1 },
-              (_, i) => visibleRange.start + i
-            ).map(renderOption)}
+            {!isLoding ? (
+              Array.from(
+                { length: visibleRange.end - visibleRange.start + 1 },
+                (_, i) => visibleRange.start + i
+              ).map(renderOption)
+            ) : (
+              lodingRenderOption()
+            )}
           </ul>
         </div>
       )}
