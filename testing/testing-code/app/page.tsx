@@ -55,13 +55,13 @@ export default function Home() {
       //       searchKey: request.searchKey ?? '',
       //   });
       // const url = `https://your_url/comments?${params}`;
-      const url = `https://jsonplaceholder.typicode.com/comments`;
+      const url = `https://jsonplaceholder.typicode.com/users`;
       const response = await fetch(url);
       if (!response.ok) throw new Error();
       const data = await response.json();
-      const itemData = data.map(({ id, email }: { id: number, email: string }) => ({
+      const itemData = data.map(({ id, name }: { id: number, name: string }) => ({
         id: id.toString(),
-        name: email.toString()
+        name: name.toString()
       }));
 
       // const countUrl = `http://your_url/count?searchKey=${request.searchKey}`;
@@ -70,7 +70,7 @@ export default function Home() {
       // const count = await countResponse.json();
       return {
         items: itemData,
-        totalCount: 500,
+        totalCount: 3,
       };
     } catch (error) {
       console.error("Error fetching data:", error);
