@@ -1,11 +1,11 @@
 'use client'
 
-// import { SelectItem, SelectorRequest, VirtualSelector } from "react-virtual-dropdown";
-import { SelectItem, SelectorRequest, VirtualSelector } from "../../../src/virtual_selector";
+import { SelectItem, SelectorRequest, VirtualSelector } from "react-virtual-dropdown";
 import styles from "./page.module.css";
 import { useCallback, useEffect, useState } from "react";
 
-import '../../../src/virtual_selector.css'
+// import { SelectItem, SelectorRequest, VirtualSelector } from "../../../src/virtual_selector";
+// import '../../../src/virtual_selector.css'
 
 export default function Home() {
   const [selectedData, setSelectedData] = useState<string>('');

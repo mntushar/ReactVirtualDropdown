@@ -2,11 +2,10 @@
   "name": "testing-code",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-  },
+  "scripts": {},
   "dependencies": {
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "react-virtual-dropdown": "^1.1.9"
   },
   "devDependencies": {
