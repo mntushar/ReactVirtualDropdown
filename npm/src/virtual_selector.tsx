@@ -17,6 +17,8 @@ type FetchDataFunction = (request: {
   startIndex: number;
   limit: number;
   searchKey: string | null;
+  cursor: string | null;
+  cursorSortColumnValue: string | null;
 }) => Promise<FetchDataResult>;
 
 type CallBackFunction = (request: SelectItem) => void;
@@ -28,15 +30,32 @@ interface SelectorProps {
   placeholder?: string;
   selectedData?: string;
   callBack: CallBackFunction;
+  cursor?: string | null;
+  cursorSortColumn?: string | null;
 }
+
+type CursorInfo = {
+  cursor: string | null;
+  cursorSortColumnValue: string | null;
+};
 
 export interface SelectorRequest {
   startIndex: number;
   limit: number;
   searchKey: string | null;
+  cursor: string | null;
+  cursorSortColumnValue: string | null;
 }
 
-const VirtualSelector = ({ fetchData, height, rowHeight, placeholder, selectedData, callBack }: SelectorProps) => {
+const VirtualSelector = ({
+  fetchData,
+  height,
+  rowHeight,
+  placeholder,
+  selectedData,
+  callBack,
+  cursor = null,
+  cursorSortColumn = null, }: SelectorProps) => {
   const buffer = 10;
   const [data, setData] = useState<Map<number, SelectItem>>(new Map());
   const [isLoding, setIsLoding] = useState<boolean>(false);
@@ -45,6 +64,8 @@ const VirtualSelector = ({ fetchData, height, rowHeight, placeholder, selectedDa
   const containerRef = useRef<HTMLDivElement>(null);
   const requestRef = useRef({
     requestId: 0,
+    cursor,
+    cursorSortColumn
   });
   const scrollTimeoutRef = useRef<number | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -52,23 +73,77 @@ const VirtualSelector = ({ fetchData, height, rowHeight, placeholder, selectedDa
   const [searchKeyValue, setSearchKeyValue] = useState<string | null>(null);
   const [searchTimerId, setSearchTimerId] = useState<number>(0);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const cursorMapRef = useRef<Map<number, CursorInfo>>(new Map());
 
   // Update selectedOption when selectedData changes
   useEffect(() => {
     setSelectedOption(selectedData);
   }, [selectedData]);
 
+  // cursor pagination
+  const getCursorForStart = (start: number): CursorInfo => {
+    let keys = Array.from(cursorMapRef.current.keys()).sort((a, b) => a - b);
+
+    for (let i = keys.length - 1; i >= 0; i--) {
+      if (keys[i] < start) {
+        return cursorMapRef.current.get(keys[i])!;
+      }
+    }
+
+    return {
+      cursor: null,
+      cursorSortColumnValue: null,
+    };
+
+  };
+
+  const saveNextCursor = (
+    start: number,
+    items: any[]
+  ) => {
+    if (!items.length) return;
+
+    const lastItem = items[items.length - 1];
+
+    const cursorField = requestRef.current.cursor;
+    const cursorSortField = requestRef.current.cursorSortColumn;
+
+    cursorMapRef.current.set(start, {
+      cursor: cursorField ? String(lastItem?.[cursorField] ?? "") || null : null,
+      cursorSortColumnValue: cursorSortField
+        ? String(lastItem?.[cursorSortField] ?? "") || null
+        : null,
+    });
+  };
+
   // Data fetching
   const fetchDataForRange = useCallback(async (start: number, end: number) => {
     const currentRequestId = Date.now();
     requestRef.current.requestId = currentRequestId;
     try {
+      let cursorInfo: CursorInfo = { cursor: null, cursorSortColumnValue: null };
+      let useCursor = !!(cursor && cursorSortColumn);
+
+      if (useCursor) {
+        cursorInfo = getCursorForStart(start);
+        if (!cursorInfo.cursor && start > 0) {
+          cursorInfo = cursorMapRef.current.get(0) || { cursor: null, cursorSortColumnValue: null };
+        }
+      }
+
       const count = end - start + 1;
-      const result = await fetchData({
-        startIndex: start,
+      const params: any = {
         limit: count,
-        searchKey: searchKeyValue,
-      });
+      };
+
+      if (useCursor && cursorInfo.cursor) {
+        params.cursor = cursorInfo.cursor;
+        params.cursorSortColumnValue = cursorInfo.cursorSortColumnValue;
+      } else {
+        params.startIndex = start;
+      }
+
+      const result = await fetchData(params);
 
       if (requestRef.current.requestId !== currentRequestId) {
         return;
@@ -76,9 +151,20 @@ const VirtualSelector = ({ fetchData, height, rowHeight, placeholder, selectedDa
 
       setData(prev => {
         const newMap = new Map(prev);
-        result.items.forEach((item, index) => {
-          newMap.set(start + index, item);
-        });
+        if (useCursor && cursorInfo.cursor) {
+          const currentSize = prev.size;
+          result.items.forEach((item, idx) => {
+            newMap.set(currentSize + idx, item);
+          });
+          saveNextCursor(currentSize, result.items);
+        } else {
+          result.items.forEach((item, idx) => {
+            newMap.set(start + idx, item);
+          });
+          if (cursor && cursorSortColumn) {
+            saveNextCursor(start, result.items);
+          }
+        }
         return newMap;
       });
 
@@ -279,5 +365,4 @@ const VirtualSelector = ({ fetchData, height, rowHeight, placeholder, selectedDa
 VirtualSelector.displayName = "VirtualSelector";
 
 export { VirtualSelector };
-
 
