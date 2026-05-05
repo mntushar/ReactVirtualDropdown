@@ -1,6 +1,6 @@
 # React Virtual Dropdown Component
 
-The VirtualSelector is a virtual scrolling-based selector component designed to optimize data loading and rendering. Instead of loading all data at once, it loads a specific number of items and fetches new data as the user scrolls.It supports both offset and cursor pagination.
+The VirtualSelector is a virtual scrolling-based selector component designed to optimize data loading and rendering. Instead of loading all data at once, it loads a specific number of items and fetches new data as the user scrolls. It supports both offset and cursor pagination.
 
 #### Props
 
