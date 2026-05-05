@@ -1,23 +1,26 @@
 'use client'
 
-import { SelectItem, SelectorRequest, VirtualSelector } from "react-virtual-dropdown";
+// import { SelectItem, SelectorRequest, VirtualSelector } from "react-virtual-dropdown";
 import styles from "./page.module.css";
 import { useCallback, useEffect, useState } from "react";
 
-// import { SelectItem, SelectorRequest, VirtualSelector } from "../../../src/virtual_selector";
-// import '../../../src/virtual_selector.css'
+import { SelectItem, SelectorRequest, VirtualSelector } from "../../../src/virtual_selector";
+import '../../../src/virtual_selector.css'
 
 export default function Home() {
   const [selectedData, setSelectedData] = useState<string>('');
   const fetchData = useCallback(async (request: SelectorRequest) => {
     try {
-      // const params = new URLSearchParams({
-      //       skip: request.startIndex.toString(),
-      //       limit: request.limit.toString(),
-      //       sortColumn: 'name',
-      //       sortOrder: '',
-      //       searchKey: request.searchKey ?? '',
-      //   });
+      const params = new URLSearchParams({
+            limit: request.limit.toString(),
+            sortColumn: 'name',
+            sortOrder: '',
+            searchKey: request.searchKey ?? '',
+            cursor: request.cursor ?? '',
+            cursorSortColumnValue: request.cursorSortColumnValue ?? '',
+        });
+        console.log(params.toString());
+
       // const url = `https://your_url/comments?${params}`;
       const url = `https://jsonplaceholder.typicode.com/comments`;
       const response = await fetch(url);
@@ -47,6 +50,8 @@ export default function Home() {
 
   const fetchData2 = useCallback(async (request: SelectorRequest) => {
     try {
+      const skip = request.startIndex.toString();
+      const limit = request.limit.toString();
       // const params = new URLSearchParams({
       //       skip: request.startIndex.toString(),
       //       limit: request.limit.toString(),
@@ -55,7 +60,7 @@ export default function Home() {
       //       searchKey: request.searchKey ?? '',
       //   });
       // const url = `https://your_url/comments?${params}`;
-      const url = `https://jsonplaceholder.typicode.com/users`;
+      const url = `https://jsonplaceholder.typicode.com/comments?_start=${skip}&_limit=${limit}`;
       const response = await fetch(url);
       if (!response.ok) throw new Error();
       const data = await response.json();
@@ -70,7 +75,7 @@ export default function Home() {
       // const count = await countResponse.json();
       return {
         items: itemData,
-        totalCount: 3,
+        totalCount: 500,
       };
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -107,7 +112,9 @@ export default function Home() {
           rowHeight={35}
           placeholder="Select Dropdown"
           selectedData={selectedData}
-          callBack={getValue} />
+          callBack={getValue}
+          cursor='id'
+          cursorSortColumn='name' />
         <br/>
         <br/>
         <br/>
