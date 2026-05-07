@@ -17,6 +17,8 @@ type FetchDataFunction = (request: {
   searchKey: string | null;
   cursor: string | null;
   cursorSortColumnValue: string | null;
+  sortOrder: string | null;
+  sortColumn: string;
 }) => Promise<FetchDataResult>;
 
 type CallBackFunction = (request: SelectItem) => void;
@@ -29,7 +31,8 @@ interface SelectorProps {
   selectedData?: string;
   callBack: CallBackFunction;
   cursor?: string | null;
-  cursorSortColumn?: string | null;
+  sortOrder: string | null;
+  sortColumn: string;
 }
 
 type CursorInfo = {
@@ -43,17 +46,20 @@ export interface SelectorRequest {
   searchKey: string | null;
   cursor: string | null;
   cursorSortColumnValue: string | null;
+  sortOrder: string | null;
+  sortColumn: string;
 }
 
 const VirtualSelector = ({
   fetchData,
   height,
   rowHeight,
+  sortOrder = null,
+  sortColumn,
   placeholder,
   selectedData,
   callBack,
-  cursor = null,
-  cursorSortColumn = null, }: SelectorProps) => {
+  cursor = null }: SelectorProps) => {
   const buffer = 10;
   const [data, setData] = useState<Map<number, SelectItem>>(new Map());
   const [isLoding, setIsLoding] = useState<boolean>(false);
@@ -63,7 +69,8 @@ const VirtualSelector = ({
   const requestRef = useRef({
     requestId: 0,
     cursor,
-    cursorSortColumn
+    sortOrder,
+    sortColumn
   });
   const scrollTimeoutRef = useRef<number | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -104,7 +111,7 @@ const VirtualSelector = ({
     const lastItem = items[items.length - 1];
 
     const cursorField = requestRef.current.cursor;
-    const cursorSortField = requestRef.current.cursorSortColumn;
+    const cursorSortField = requestRef.current.sortColumn;
 
     cursorMapRef.current.set(start, {
       cursor: cursorField ? String(lastItem?.[cursorField] ?? "") || null : null,
@@ -120,7 +127,7 @@ const VirtualSelector = ({
     requestRef.current.requestId = currentRequestId;
     try {
       let cursorInfo: CursorInfo = { cursor: null, cursorSortColumnValue: null };
-      let useCursor = !!(cursor && cursorSortColumn);
+      let useCursor = !!(requestRef.current.cursor);
 
       if (useCursor) {
         cursorInfo = getCursorForStart(start);
@@ -132,6 +139,9 @@ const VirtualSelector = ({
       const count = end - start + 1;
       const params: any = {
         limit: count,
+        sortOrder: requestRef.current.sortOrder,
+        sortColumn: requestRef.current.sortColumn,
+        searchKey: searchKeyValue
       };
 
       if (useCursor && cursorInfo.cursor) {
@@ -159,7 +169,7 @@ const VirtualSelector = ({
           result.items.forEach((item, idx) => {
             newMap.set(start + idx, item);
           });
-          if (cursor && cursorSortColumn) {
+          if (cursor) {
             saveNextCursor(start, result.items);
           }
         }
