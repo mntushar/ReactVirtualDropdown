@@ -10,7 +10,8 @@ The VirtualSelector is a virtual scrolling-based selector component designed to 
 - **placeholder (string)** - Placeholder text displayed in the dropdown.
 - **selectedData (string | object)** - Default value for the selected item.
 - **cursor (string | null)** - The field name to use for cursor-based pagination.
-- **cursorSortColumn (string | null)** - The column used to sort when applying cursor-based pagination.
+- **sortOrder (string | null)** - The order in which data should be sorted (asc or desc). Defaults to null.
+- **sortColumn (string)** - The column by which data should be sorted.
 - **callBack (function)** - A callback function triggered when a user selects an item, returning the selected item's data.
 
 #### How It Works?
@@ -102,7 +103,9 @@ export default function Home() {
           rowHeight={35}
           placeholder="Select Dropdown"
           selectedData={selectedData}
-          callBack={getValue} />
+          callBack={getValue}
+          sortColumn='name'
+          sortOrder='DESC' />
       </div>
     </div>
   );
@@ -180,7 +183,8 @@ export default function Home() {
           placeholder="Select Dropdown"
           selectedData={selectedData}
           cursor='id'
-          cursorSortColumn='email'
+          sortColumn='name'
+          sortOrder='DESC'
           callBack={getValue} />
       </div>
     </div>
