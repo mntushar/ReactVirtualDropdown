@@ -47,9 +47,9 @@ export default function Home() {
       const params = new URLSearchParams({
             skip: request.startIndex.toString(),
             limit: request.limit.toString(),
-            sortColumn: 'name',
-            sortOrder: '',
-            searchKey: request.searchKey ?? '',
+            sortColumn: request.sortColumn,
+            sortOrder: request.sortOrder,
+            searchKey: request.searchKey,
         });
       const url = `https://your_url/comments?${params}`;
       const response = await fetch(url);
@@ -124,11 +124,11 @@ export default function Home() {
     try {
       const params = new URLSearchParams({
             limit: request.limit.toString(),
-            sortColumn: 'name',
-            sortOrder: '',
-            searchKey: request.searchKey ?? '',
-            cursor: request.cursor ?? '',
-            cursorSortColumnValue: request.cursorSortColumnValue ?? '',
+            sortColumn: request.sortColumn,
+            sortOrder: request.sortOrder,
+            searchKey: request.searchKey,
+            cursor: request.cursor,
+            cursorSortColumnValue: request.cursorSortColumnValue,
         });
       const url = `https://your_url/comments?${params}`;
       const response = await fetch(url);
